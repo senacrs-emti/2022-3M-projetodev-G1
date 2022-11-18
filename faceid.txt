@@ -1,0 +1,83 @@
+[11/11 10:22] MARIA FERNANDA TAVARES
+# biblioteca mysql
+import pymysql
+# conexao com o banco
+con = pymysql.connect(host='localhost',user='root',password='',database='faceid',cursorclass=pymysql.cursors.DictCursor)
+
+ # Criar a consulta e executá-la no banco
+ with con.cursor() as c:
+    # Criar a consulta e executá-la no banco
+    sql = "SELECT * FROM pessoas WHERE PessoaID = 1"
+    
+         
+
+# Desconectar do servidor
+con.close()
+
+[11/11 10:22] MARIA FERNANDA TAVARES
+from datetime import date
+import mysql.connector
+
+db_connection = mysql.connector.connect(host="localhost", user="root", passwd="", database="faceid")
+cursor = db_connection.cursor()
+sql = "INSERT INTO pessoas (Nome,Cor,Time) VALUES (%s, %s)"
+values = ("", "")
+cursor.execute(sql, values)
+current_date = date.today()
+formatted_date = current_date.strftime('%d/%m/%Y')
+
+print(formatted_date)
+print("\n")
+print(cursor.rowcount, "record inserted.")
+print("\n")
+
+sql = ("SELECT id, name, cpf FROM user")
+cursor.execute(sql)
+
+for (id, name, cpf) in cursor:
+  print(id, name, cpf)
+print("\n")
+
+sql = ("update user set name = 'Regina Phalanges' where cpf='025.658.698-55'")
+cursor.execute(sql)
+
+print(cursor.rowcount, "record updated.")
+print("\n")
+
+sql = ("SELECT id, name, cpf FROM user")
+cursor.execute(sql)
+
+for (id, name, cpf) in cursor:
+  print(id, name, cpf)
+  
+cursor.close()
+db_connection.commit()
+db_connection.close()
+
+
+------------------------------------------------------
+
+[11/11 10:22] MARIA FERNANDA TAVARES
+import mysql.connector
+from mysql.connector import Error
+
+try:
+    connection = mysql.connector.connect(host='localhost',
+                                         database='faceid',
+                                         user='root',
+                                         password='')
+    if connection.is_connected():
+        db_Info = connection.get_server_info()
+        print("Connected to MySQL Server version ", db_Info)
+        cursor = connection.cursor()
+        cursor.execute("select database();")
+        record = cursor.fetchone()
+
+except Error as e:
+    print("Error while connecting to MySQL", e)
+finally:
+    if connection.is_connected():
+        cursor.close()
+        connection.close()
+        print("MySQL connection is closed")
+
