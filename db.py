@@ -1,23 +1,18 @@
-import mysql.connector
-from mysql.connector import Error
+# import das bibliotecas 
+import pymysql, pymysql.cursors
 
-try:
-    connection = mysql.connector.connect(host='localhost',
-                                         database='faceid',
-                                         user='root',
-                                         password='')
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
+# conexao com o banco
+con = pymysql.connect(host='localhost',user='root',password='',database='faceid',cursorclass=pymysql.cursors.DictCursor)
+# criar a consulta e executá-la no banco e executa o codigo
+sql = "SELECT * FROM pessoas WHERE PessoaID = 1"
 
+# percorre oa consulta de dados
+with con.cursor() as cur:
+    cur.execute(sql)
+    rows = cur.fetchall()
+    for row in rows:
+        ## escreve os dados da pessoa
+        print(row['Nome'])
 
-except Error as e:
-    print("Error while connecting to MySQL", e)
-finally:
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("MySQL connection is closed")
+# Desconectar do servidor
+con.close()
