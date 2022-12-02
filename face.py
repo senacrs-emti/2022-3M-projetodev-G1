@@ -171,65 +171,11 @@ while video_capture.isOpened():
 
 
 
-# Inicializar webcam
-
-cap = cv2.VideoCapture(0)
-
-
-
-# Loop para leitura do conteúdo
-
-while(not cv2.waitKey(20) & 0xFF == ord('q')):
-
-        # Capturar proximo frame
-
-        ret, frame = cap.read()
-
-
-
-        # TODO: Converter para tons de cinza
-
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-
-
-        # TODO: Classificar
-
-        faces = clf.detectMultiScale(gray)
-
-
-
-        # TODO: Desenhar retangulo
-
-        for x, y, w, h in faces:
-
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0))
-
-
-
-        # Visualizar
-
-        cv2.imshow('frame',frame)
-
-
-
-# Desligar a webcam
-
-cap.release()
-
-
-
-#Fechar janela do vídeo
-
-cv2.destroyAllWindows()
-
-cv2.waitKey(1)
 
 
 
 
 
-
-## Execute code
+## Executar code
 database = setup_database()
 run_face_recognition(database)
